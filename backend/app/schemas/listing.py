@@ -7,7 +7,6 @@ class ListingResponse(BaseModel):
     source: str
     location: Optional[str]
     rent: Optional[int]
-    brokerage: Optional[bool]
     bhk: Optional[str]
     amenities: Optional[List[str]]
     contact: Optional[str]

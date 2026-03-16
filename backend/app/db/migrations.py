@@ -14,6 +14,7 @@ def run_migrations():
             location    TEXT,
             rent        INTEGER,
             bhk         TEXT,
+            brokerage   BOOLEAN,
             amenities   TEXT[],
             contact     TEXT,
             posted_at   TIMESTAMP DEFAULT NOW(),
@@ -33,3 +34,4 @@ def run_migrations():
     cur.close()
     conn.close()
     print("✅ Migrations complete")
+    

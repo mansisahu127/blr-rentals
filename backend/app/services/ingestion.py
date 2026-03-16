@@ -1,5 +1,6 @@
 import json
 from groq import Groq
+import numpy as np
 from app.core.config import settings
 from app.db.database import get_connection
 from app.services.embeddings import get_embedding
@@ -37,7 +38,7 @@ def ingest_listing(raw_text: str, source: str, source_id: str) -> bool:
     """Full pipeline: parse → embed → store. Returns True if new, False if duplicate."""
     try:
         parsed = parse_listing(raw_text)
-        embedding = get_embedding(raw_text)
+        embedding = np.array(get_embedding(raw_text), dtype=np.float32)
 
         conn = get_connection()
         cur = conn.cursor()
