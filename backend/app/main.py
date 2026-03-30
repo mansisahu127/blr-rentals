@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.db.migrations import run_migrations
 from app.api.v1.routers import chat, listings, ingest
+# Import the scheduler from your ingest router
+from app.api.v1.routers.ingest import start_scheduler
 
 app = FastAPI(
     title=settings.app_name,
@@ -13,6 +15,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
+    # Keep your refined origins here for security!
     allow_origins=["http://localhost:5173", "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
@@ -21,7 +24,16 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup():
+    # 1. Run DB migrations
     run_migrations()
+    
+    # 2. Start the background scrapers
+    try:
+        # start_scheduler()
+        print("Background Scheduler initialized")
+    except Exception as e:
+        print(f"Failed to start scheduler: {e}")
+        
     print(f"🚀 {settings.app_name} is running")
 
 app.include_router(

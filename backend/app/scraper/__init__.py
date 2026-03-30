@@ -1,0 +1,1 @@
+from app.scraper.nobroker import scrape_nobroker
