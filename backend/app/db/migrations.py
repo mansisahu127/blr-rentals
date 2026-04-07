@@ -19,15 +19,16 @@ def run_migrations():
             contact     TEXT,
             posted_at   TIMESTAMP DEFAULT NOW(),
             source_id   TEXT UNIQUE,
-            embedding   vector(768)
+            embedding   vector(384)
         );
     """)
 
-    # Index for fast similarity search
+    # Rebuild index — drop the old one (lists=100 is too high for small datasets)
+    cur.execute("DROP INDEX IF EXISTS listings_embedding_idx;")
     cur.execute("""
-        CREATE INDEX IF NOT EXISTS listings_embedding_idx
+        CREATE INDEX listings_embedding_idx
         ON listings USING ivfflat (embedding vector_cosine_ops)
-        WITH (lists = 100);
+        WITH (lists = 10);
     """)
 
     conn.commit()

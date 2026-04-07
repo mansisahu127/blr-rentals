@@ -1,4 +1,5 @@
 import asyncio
+import hashlib
 from playwright.async_api import async_playwright
 from app.services.ingestion import ingest_listing
 
@@ -6,7 +7,7 @@ async def scrape_nobroker():
     # Targeted high-demand areas in Bengaluru
     localities = ["hsr-layout", "whitefield", "koramangala", "indiranagar"]
     
-    print("Starting NoBroker Targeted Scraper...")
+    print("🚀 Starting NoBroker Targeted Scraper...")
     
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
@@ -37,11 +38,14 @@ async def scrape_nobroker():
 
                 for card in recent_listings:
                     raw_text = await card.inner_text()
-                    prop_id = await card.get_attribute("id")
-                    source_id = prop_id if prop_id else f"nb-{hash(raw_text)}"
-                    
-                    # Pass to your ingestion service (AI + Embedding + DB)
-                    ingest_listing(" ".join(raw_text.split()), "nobroker", source_id)
+                    normalized = " ".join(raw_text.split())
+
+                    # Deterministic ID from area + content — same listing deduplicates,
+                    # different listings (even at the same DOM position) stay unique
+                    content_hash = hashlib.sha256(f"{area}:{normalized}".encode()).hexdigest()[:16]
+                    source_id = f"nb-{area}-{content_hash}"
+
+                    ingest_listing(normalized, "nobroker", source_id)
 
             except Exception as e:
                 print(f"Failed to scrape {area}: {e}")

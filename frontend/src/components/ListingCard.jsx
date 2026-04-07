@@ -26,7 +26,7 @@ export default function ListingCard({ listing }) {
 
       <div className="flex items-center justify-between">
         <span className="text-xs text-gray-400">
-          via {listing.source === 'twitter' ? '🐦 Twitter' : '📘 Facebook'}
+          via {listing.source === 'nobroker' ? '🏠 NoBroker' : listing.source === 'twitter' ? '🐦 Twitter' : listing.source === 'manual' ? '✍️ Manual' : `📋 ${listing.source}`}
         </span>
         {listing.contact && (
           <a href={`tel:${listing.contact}`}

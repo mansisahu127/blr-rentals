@@ -9,12 +9,14 @@ class Settings(BaseSettings):
     # Database
     database_url: str
 
-    # Ollama
-    ollama_base_url: str = "http://localhost:11434"
-    embedding_model: str = "nomic-embed-text"
+    # # Ollama
+    # ollama_base_url: str = "http://localhost:11434"
+    # embedding_model: str = "nomic-embed-text"
 
     # LLM
     llm_model: str = "llama-3.3-70b-versatile"
+
+    embedding_model: str = "all-MiniLM-L6-v2"
 
     # App
     app_name: str = "BLR Rentals API"
