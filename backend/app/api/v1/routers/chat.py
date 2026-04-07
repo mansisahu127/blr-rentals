@@ -80,7 +80,7 @@ Guidelines:
         )
         reply = response.choices[0].message.content
     except Exception as e:
-        print(f"❌ Groq API error: {e}")
+        print(f"Groq API error: {e}")
         reply = "Sorry, I'm having trouble connecting to the AI service right now. Please try again in a moment."
 
     # Update session history (keep last 10 messages)

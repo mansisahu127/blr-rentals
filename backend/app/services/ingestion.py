@@ -43,6 +43,9 @@ def ingest_listing(raw_text: str, source: str, source_id: str) -> bool:
         conn = get_connection()
         cur = conn.cursor()
 
+        dsn = conn.get_dsn_parameters()
+        print(f"🔍 DEBUG: Target Host: {dsn.get('host')} | DB: {dsn.get('dbname')}")
+
         cur.execute("""
             INSERT INTO listings
                 (source, raw_text, location, rent, brokerage, bhk, amenities, contact, source_id, embedding)

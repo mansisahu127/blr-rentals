@@ -33,7 +33,7 @@ def get_listing_stats() -> dict:
             "by_area": by_area or "N/A"
         }
     except Exception as e:
-        print(f"❌ Stats query failed: {e}")
+        print(f"Stats query failed: {e}")
         return {"total": "unknown", "areas": "unknown", "avg_rent": "unknown", "by_area": "N/A"}
 
 
@@ -49,9 +49,9 @@ def search_listings(
 
     try:
         query_embedding = get_query_embedding(query)
-        print(f"✅ Embedding generated, length: {len(query_embedding)}")
+        print(f"Embedding generated, length: {len(query_embedding)}")
     except Exception as e:
-        print(f"❌ Embedding failed: {e}")
+        print(f"Embedding failed: {e}")
         return []
 
     # Serialize as postgres vector literal — most reliable approach
@@ -104,13 +104,13 @@ def search_listings(
         cur.execute(query_sql, filter_params + [limit])
 
         results = [dict(r) for r in cur.fetchall()]
-        print(f"✅ Search returned {len(results)} listings")
+        print(f"Search returned {len(results)} listings")
         cur.close()
         conn.close()
         return results
 
     except Exception as e:
-        print(f"❌ Search failed: {e}")
+        print(f"Search failed: {e}")
         import traceback
         traceback.print_exc()
         return []
