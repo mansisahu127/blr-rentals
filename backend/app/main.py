@@ -16,7 +16,11 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     # Keep your refined origins here for security!
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://blr-rentals.vercel.app",  
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
