@@ -15,11 +15,13 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    # Keep your refined origins here for security!
     allow_origins=[
         "http://localhost:5173",
         "http://localhost:3000",
-        "https://blr-rentals.vercel.app",  
+        "https://blr-rentals.vercel.app",
+        "https://blr-rentals.vercel.app/",
+        "https://blr-rentals-calm23s-projects.vercel.app",
+        "https://blr-rentals-calm23s-projects.vercel.app/"
     ],
     allow_credentials=True,
     allow_methods=["*"],
